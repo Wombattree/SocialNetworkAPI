@@ -1,6 +1,6 @@
 const { Schema, Types } = require('mongoose');
 
-const reactionSchema = new Schema(
+const Reaction = new Schema(
   {
     reactionId: 
     {
@@ -23,7 +23,7 @@ const reactionSchema = new Schema(
     {
       type: Date,
       default: Date.now(),
-      get: () => this.createdAt.toLocaleDateString(),
+      get: GetFormatedDate,
     },
   },
   {
@@ -32,4 +32,9 @@ const reactionSchema = new Schema(
   }
 );
 
-module.exports = reactionSchema;
+function GetFormatedDate(createdAt)
+{
+  return createdAt.toLocaleDateString();
+}
+
+module.exports = Reaction;
