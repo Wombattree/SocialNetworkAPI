@@ -15,7 +15,6 @@ const thoughtSchema = new Schema
     {
       type: Date,
       default: Date.now(),
-      //get: () => this.createdAt.toLocaleDateString(),
       get: GetFormatedDate,
     },
     username: 
@@ -24,7 +23,6 @@ const thoughtSchema = new Schema
       required: true,
     },
     reactions: [Reaction],
-    //reactions: [{ type: Schema.Types.ObjectId, ref: 'Reactions', },],
   },
   {
     toJSON: 

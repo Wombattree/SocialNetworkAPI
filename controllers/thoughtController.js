@@ -22,22 +22,12 @@ module.exports =
 	CreateThought(req, res) 
 	{
 		Thought.create(req.body)
-			.then((thought) => res.json(thought))
 			.then((thought) => User.findOneAndUpdate(
 					{ _id: req.body.userId }, 
 					{ $push: { thoughts : thought._id }}, 
 					{ runValidators: true, new: true })
+			.then((thought) => res.json(thought))
 			.catch((err) => { console.log(err); return res.status(500).json(err); }));
-			
-		// Thought.create(req.body)
-		// 	.then((thought) => res.json(thought))
-		// 	.then((thought) => !thought 
-		// 		? res.status(404).json({ message: "Creating this thought failed" }) 
-		// 		: User.findOneAndUpdate(
-		// 			{ _id: req.body.userId }, 
-		// 			{ $push: { thoughts : thought._id }}, 
-		// 			{ runValidators: true, new: true })
-		// 	.catch((err) => { console.log(err); return res.status(500).json(err); }));
 	},
 	UpdateThought(req, res) 
 	{
@@ -62,7 +52,6 @@ module.exports =
 		Thought.findOneAndUpdate(
 			{ _id: req.params.thoughtId },
 			{ $addToSet: { reactions: req.body } },
-			//{ $push: { reactions : Reaction.create(req.body) }},
 			{ runValidators: true, new: true })
 			.then((thought) => ! thought
 				? res.status(404).json({ message: errorMessage })
